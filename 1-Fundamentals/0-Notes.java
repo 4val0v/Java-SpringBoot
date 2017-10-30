@@ -215,3 +215,57 @@ public String fizzBuzz(String number, int numberTwo) {
 // we might have the following two methods in the same class
 // which code would be invoked when we call the fizzBuzz method? It depends on the argument type and the method signature! Due to Java's type system, if we try to call fizzBuzz with a string and int, it will know that we are trying to invoke the fizzBuzz method with the signature fizzBuzz(String, int).
 
+
+// Arrays
+// In Java, LENGTH has a fixed size after initialization
+
+// Declaration, initialization, and adding in separate steps
+int[] myArray;
+myArray = new int[5];    // Initialization (5 is length)
+myArray[0] = 4;
+myArray[1] = 8;
+myArray[2] = 8;
+myArray[3] = 5;
+myArray[4] = 9;
+
+// All at once; length determined by number of elements
+int[] myArray = {4, 8, 8, 5, 9};
+
+
+// ArrayList
+// When you want a resizable array, use the ArrayList class
+import java.util.ArrayList;
+ArrayList<Integer> myArray = new ArrayList<Integer>();
+// <Integer> tells our ArrayList the data types it can hold
+
+// Basic ArrayList methods
+myArray.add(10);
+int num = myArray.get(0); // get the int at this index
+myArray.size(); // size of the array ('size' for ArrayList)
+
+
+// While loop
+int i = 0;
+while(i < 7)
+{
+    System.out.println("foo");
+    i++;
+}
+
+// For loop
+for (int i = 0; i < 7; i++){
+    System.out.println("bar");
+}
+
+// Looping over an ArrayList
+for (int i = 0; i < dynamicArray.size(); i++){
+    String name = dynamicArray.get(i);
+    System.out.println("hello " + name);
+    // other operations using name
+}
+
+// Enhanced For loop over an ArrayList
+for (String name : dynamicArray){ // element container : collection
+    System.out.println("hello " + name);
+}
+
