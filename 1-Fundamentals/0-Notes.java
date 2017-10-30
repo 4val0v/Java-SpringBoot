@@ -148,3 +148,46 @@ public class ImportDemoTest {
 }
 
 
+// Strings: commonly used methods
+
+// Length
+public class StringDemo {
+    public static void main(String[] args) {
+       String ninja = "Coding Dojo";
+       int length = ninja.length();
+       System.out.println( "Length is : " + length ); // 11
+    }
+}
+
+// Concatenate
+String string1 = "My name is ";
+String string2 = "Michael";
+String string3 = string1.concat(string2);
+System.out.println(string3);
+// will output My name is Michael
+// you can also use the + sign:
+"Welcome," + " ninja"; // displays "Welcome, ninja"
+
+// Format (another way to concat strings)
+String ninja = String.format("Hi %s, you owe me $%.2f", "Jack", 25.);
+System.out.println(ninja); // prints "Hi Jack, you owe me $25.00"
+// %s is expecting a string
+// %.2f is expecting a float data type. The value 2 will place two values to right of the decimal point
+
+// IndexOf: Searches left-to-right inside the given string for a "target" string. The indexOf() method returns the index number where the target string is first found, or -1 if the target is not found
+String ninja = "Welcome to Coding Dojo!";
+int a = ninja.indexOf("Coding"); // a is 11
+int b = ninja.indexOf("co"); // b is 3
+int c = ninja.indexOf("pizza"); // c is -1, "pizza" is not found
+
+
+// Conditionals
+
+// IF
+if(defenderGuarding == true) {
+    System.out.println("Pass The Ball");
+} else if(closeToBasket == true) {
+    System.out.println("Shoot The Ball");
+} else {
+    System.out.println("Dribble The Ball");
+}
