@@ -9,6 +9,6 @@ public class FizzBuzz {
             return "Buzz";
         } else {
             return "Number: " + number;
-        }
+        } // Also: return String.valueOf(num);
     }
 }

@@ -191,3 +191,27 @@ if(defenderGuarding == true) {
 } else {
     System.out.println("Dribble The Ball");
 }
+
+
+// Methods
+// In Java, functions are always "methods"
+
+// Method declaration:
+public void fooBar(int someNumber, String someString) {
+
+public // is the access level (for now, use this always)
+void // is the return type
+fooBar // is the name
+int someNumber // a parameter variable
+String someString // another parameter variable
+
+// Method signature
+fooBar(int, String) // a "signature" includes name and parameter type
+
+// Overloading methods
+// With a method signature, we can call two methods the same name
+public String fizzBuzz(int number) {
+public String fizzBuzz(String number, int numberTwo) {
+// we might have the following two methods in the same class
+// which code would be invoked when we call the fizzBuzz method? It depends on the argument type and the method signature! Due to Java's type system, if we try to call fizzBuzz with a string and int, it will know that we are trying to invoke the fizzBuzz method with the signature fizzBuzz(String, int).
+
