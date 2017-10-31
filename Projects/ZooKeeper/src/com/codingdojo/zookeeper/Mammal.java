@@ -2,13 +2,9 @@ package com.codingdojo.zookeeper;
 
 class Mammal {
 	
-	private int energyLevel;
+	private int energyLevel = 100;
 	
 	public Mammal() {}
-	
-	public Mammal(int energy) {
-		setEnergyLevel(energy);
-	}
 	
 	public int displayEnergy() {
 		System.out.println(getEnergyLevel());
