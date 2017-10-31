@@ -269,3 +269,39 @@ for (String name : dynamicArray){ // element container : collection
     System.out.println("hello " + name);
 }
 
+
+// HashMap (key-value pairs)
+
+// Importing and creating
+import java.util.HashMap;
+HashMap<String, String> userMap = new HashMap<>();
+
+// Storing
+userMap.put("nninja@codingdojo.com", "Nancy Ninja");
+userMap.put("ssamurai@codingdojo.com", "Sam Samurai");
+
+// Getting
+String name = userMap.get("nninja@codingdojo.com");
+
+// Printing keys and values
+
+for(String key : trackList.keySet()) {
+    System.out.println(key + " : " + trackList.get(key));
+}
+
+
+// Try/Catch
+// In exceptional situations, use a contingency plan
+
+class DeliverMessage{
+    public static void main(String[] args){
+        UnreliableFriend friend = new UnreliableFriend();
+        try{
+            friend.deliverMessage();
+            System.out.println("The message was delivered!");
+        } catch (OutOfGasException e){
+            System.out.println("Hey, uh, so, I ran out of gas..");
+            // back-up plan here.
+        }
+    }
+}
