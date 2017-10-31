@@ -19,4 +19,12 @@ class Human {
 	public void setHealth(int health) {
 		this.health = health;
 	}
+
+	public int getStealth() {
+		return stealth;
+	}
+
+	public void setStealth(int stealth) {
+		this.stealth = stealth;
+	}
 }
