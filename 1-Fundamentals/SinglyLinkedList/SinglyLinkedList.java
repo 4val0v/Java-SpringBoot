@@ -1,21 +1,23 @@
 
 class SinglyLinkedList {
     
-    private Node head;
+    public Node head;
 
     public SinglyLinkedList() {
         head = null;
     }
 
-    public void add(int value) {
+    public void add(Integer value) {
+        Node node = new Node(value);
+        
         if (head == null) {
-            Node head = new Node(value);
+            head = node;
         } else {
             Node pointer = head;
             while (pointer.next != null) {
                 pointer = pointer.next;
             }
-            Node pointer.next = new Node(value);
+            pointer.next = new Node(value);
         }
     }
 
@@ -34,7 +36,7 @@ class SinglyLinkedList {
         if (head == null) {
         } else {
             Node pointer = head;
-            while (pointer.next != null) {
+            while (pointer != null) {
                 System.out.println(pointer.value);
                 pointer = pointer.next;
             }
