@@ -305,3 +305,102 @@ class DeliverMessage{
         }
     }
 }
+
+
+// OOP
+
+public class Greeting {
+
+    // In this example, a private method is created to determine the logic that will be run in the other two public methods.
+    private String createGreeting(String toBeGreeted){
+        return "Hello " + toBeGreeted;
+    }
+    public String greet(){
+        return createGreeting("World");
+    }
+    public String greet(String firstName, String lastName){
+        return createGreeting(firstName + " " + lastName)
+    }
+    // Without the private method, we would need to duplicate instructions in the public methods. What if we want to change the greeting from "Hello" to "What's up"? We can efficiently do so by just changing the private method.
+}
+
+
+// Structures of Methods:
+
+// Modifiers:
+private // only the class in which it is declared can see and access this method
+protected // subclasses can use this method
+public // every class has access to this method
+
+// Return type: String, int, double, boolean, void, etc.
+
+// Method name (usually as verbs)
+
+// Parameter list
+
+// Method body (what goes inside the curly braces)
+
+// Method type:
+static // defines method as class method that can be invoked without creating an object
+// if it makes sense to call a certain method even if the object has not yet been constructed, then it should be static.
+
+
+// Types of variables:
+// Member variables: object attributes or fields
+// Local variables: variables in method/code blocks
+// Parameter variables (those declared in the method)
+
+
+// Getters and Setters
+class Vehicle {
+    private int numberOfWheels;
+    private String color;
+    public int getNumberOfWheels() { // getter
+        return numberOfWheels;
+    }
+    public void setNumberOfWheels(int number) { // setter
+        numberOfWheels = number;
+    }
+}
+
+class VehicleTest {
+    public static void main(String[] args) {
+        Vehicle bike = new Vehicle();
+
+        bike.setNumberOfWheels(2); // invoke set method
+        bike.setColor("red");
+        int bikeWheels = bike.getNumberOfWheels();
+        String bikeColor = bike.getColor(); // invoke get
+
+        System.out.println("Bike object - Wheels: " + bikeWheels + ", Color: " + bikeColor);
+    }
+}
+
+
+// Object Superclass
+// https://docs.oracle.com/javase/tutorial/java/IandI/objectclass.html
+// Since all objects are descendants of the Object class, we can use all the methods inherited from the Object class
+// Some methods include:
+.getClass() // returns a Class object that represents the object's current class; you can build off this by using the following methods:
+    .getSimpleName() // 
+    .getSuperclass() //
+    .getInterfaces() //
+.equals() // used for comparing two objects and returns bool
+.toString() // returns a string representation; can override this
+
+
+class Person {
+    private int age;
+    private String name;
+
+    public Person(int ageParam, String nameParam) {
+        this.age = ageParam;
+        this.name = nameParam;
+    }
+
+    public void objectMethods(Person anotherObject) {
+        System.out.println("Class name: " + this.getClass().getSimpleName());
+        System.out.println("toString: " + this.toString());
+        System.out.println("Equals: " + this.equals(anotherObject));
+    }
+}
