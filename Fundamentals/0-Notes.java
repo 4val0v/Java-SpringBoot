@@ -452,3 +452,177 @@ class HumanTest { // Human takes on Mammal attributes
     }
 }
 
+
+// Interfaces
+// Allow classes to share functionality without having the same parent class
+// Are not instantiated like classes
+// Cannot contain instance fields (only static , final fields)
+// Can extend other interfaces, and can be implemented by multiple classes
+
+// Interface methods:
+default // methods that are pre-implemented in the class that implements it
+static // interface member methods, called on the interface (not the class)
+abstract // methods declared without implementation (requires logic in class)
+
+// Interface variable: implicitly stated (see 'myConstant' below)
+
+public interface OperateBicycle {
+
+    // constant that is implicitly public, static, and final
+    double myConstant = 3.0; // an attribute to be inherited by classes
+    
+    // default method that does not need implementation
+    default void sayHello() {
+        System.out.println("Hello everybody");
+    }
+    
+    // when implemented, implements on interface level
+    static void staticMethod() {
+        System.out.println("Hello from the static method of the interface");
+    }
+
+    // abstract methods that are declared without implementation;
+    void speedUp(int increment); // implicit, so no need to mention;
+    void applyBrakes(int decrement); // lets objects change a member var (e.g. speed);
+}
+
+// How to implement interfaces:
+class Bicycle implements OperateBicycle { // 'implements' keyword    
+    private int speed;
+
+    public Bicycle() {
+        speed = 0; // at instantiation, speed will be 0
+    }
+
+    // a static method that calls on the interface static method
+    public static void staticMethod() {
+        OperateBicycle.staticMethod();
+    }
+
+    // implementing speedUp
+    public void speedUp(int increment) {
+        speed += increment;
+    }
+
+    // implementing applyBrakes
+    public void applyBrakes(int decrement) {
+        speed -= decrement;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+}
+
+
+// Abstract classes
+
+// Like interfaces, cannot be instantiated and methods may not be implemented
+// But they are used so that classes can inherit same characteristics and methods without needing to have an actual parent class that can get instantiated
+// Abstract classes should not be instantiated (i.e. mammal). If something is a mammal, it is also either a human or some animal. "Mammal" is itself an abstract categorization.
+
+public abstract class AbstractClass {
+    public void randomMethod() {
+        System.out.println("This is a random method that is implemented in this class");
+    }
+    // abstract method
+    public abstract void abstractMethod();
+}
+
+public class SubClassOne extends AbstractClass{
+    // we must implement the abstract method otherwise we will get an error.
+    // it must be implemented because it extends from AbstractClass
+    public void abstractMethod() {
+        System.out.println("This is our method from subclass one");
+    }
+}
+
+public class SubClassTwo extends AbstractClass{
+    // we must also implement the abstract method otherwise we will get an error.
+    public void abstractMethod() {
+        System.out.println("This is our method from subclass two");
+    }
+}
+
+
+// Abstract class that implements an interface
+
+public interface InterfaceDemo {
+    void methodOne(); // abstract methods
+    void methodTwo();
+}
+
+public abstract class AbstractDemo implements InterfaceDemo {
+    public void methodOne() { // abstract methods created
+        System.out.println("Hello from the abstract demo");
+    }
+}
+
+public class ClassDemo extends AbstractDemo {
+    public void methodTwo() {
+        System.out.println("Hello from the class demo");
+    }
+}
+
+class AbstractTester {
+    public static void main(String[] args) {
+        ClassDemo c = new ClassDemo();
+        c.methodOne(); // abstract methods implemented
+        c.methodTwo();
+    }
+}
+
+
+// Abstract vs Interfaces
+// Both can be used by classes to inherit various fields/methods
+// Interfaces rigidly require classes to use their abstract methods
+// Abstract classes, on the other hand, leave that optional
+
+// Interfaces are used when:
+// - unrelated classes must implement various fields/methods
+// - to specify the behavior of a particular data type for multiple classes
+// - to take advantage of multiple inheritances of type
+
+public interface Driveable { // normally interfaces are adjectives
+    boolean hasWheels = True; // a final, static constant
+    int getWheelAmt(); // same
+    void setWheelAmt(int wheelAmt); // abstract method that must be implemented
+    double getSpeed(); // same
+    void setSpeed(double speed); // same
+}
+
+public class Vehicle implements Drivable {
+
+    // you must define everything set in your interface
+    int wheelAmt = 2;
+    double speed = 0;
+
+    // plus any additional features
+    int acceleration = 0;i
+    
+    // must implement every abstract method inside of interface
+    public int getWheelAmt() {
+        return this.wheelAmt;
+    }
+    public void setWheelAmt(int amt) {
+        wheelAmt = amt;
+    }
+    public double setSpeed() {
+        return this.speed;
+    }
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public Vehicle(int wheels, double speed) {
+        this.wheelAmt = wheels;
+        this.speed = speed;
+    }
+
+}
+
+// Abstract classes are used when:
+// - related classes need to inherit various methods or fields
+// - related classes require access modifiers other than public
+// - to declare non-static or non-final fields (that can be modified by methods)
+
