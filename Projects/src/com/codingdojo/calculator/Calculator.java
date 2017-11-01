@@ -22,10 +22,10 @@ public class Calculator {
     }
 
     public void performOperation() {
-        if (operation == "+") {
+        if (operation.equals("+")) {
             result = operandOne + operandTwo;
         }
-        else if (operation == "-") {
+        else if (operation.equals("-")) {
             result = operandOne - operandTwo;
         }
         else {
