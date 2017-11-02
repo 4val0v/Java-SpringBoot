@@ -14,11 +14,11 @@
 
 <div class=row>
 <div class="col-md-6 text-center">
-        <a href=/date><h3>Date</h3></a>
+        <a href=/date><h3><span id=date>Date</span></h3></a>
 </div>
 
 <div class="col-md-6 text-center">
-        <a href=/time><h3>Time</h3></a>
+        <a href=/time><h3><span id=time>Time</span></h3></a>
 </div>
 </div>
 
