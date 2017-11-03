@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CounterController extends HttpServlet {
 	
-	private static final long serialVersionUID = 1L; // not sure what this does, but apparently it's important
+	private static final long serialVersionUID = 1L; // this creates unique session IDs
 	
 	@RequestMapping("/")
 	public String index(HttpSession session) {
