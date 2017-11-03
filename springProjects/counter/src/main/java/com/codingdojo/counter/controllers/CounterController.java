@@ -17,7 +17,7 @@ public class CounterController extends HttpServlet {
 	private static final long serialVersionUID = 1L; // not sure what this does, but apparently it's important
 	
 	@RequestMapping("/")
-	public String index(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+	public String index(HttpSession session) {
 		if(session.getAttribute("counter") == null) { // if "counter" not in session, add attribute and set to 0;
 			session.setAttribute("counter", 0);
 		}
@@ -26,7 +26,7 @@ public class CounterController extends HttpServlet {
 	}
 	
 	@RequestMapping("/show")
-	public String index(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws ServletException, IOException {
+	public String show(Model model, HttpSession session) {
 		model.addAttribute("counter", session.getAttribute("counter")); // show session counts on page
 		return "show";
 	}
