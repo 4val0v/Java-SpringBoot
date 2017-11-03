@@ -20,11 +20,11 @@ public class Home {
 	
 	@PostMapping("send")
 	public String send(HttpSession session,
-		@RequestParam(value="name") String name,
-		@RequestParam(value="dojo") String dojo,
-		@RequestParam(value="stack") String stack,
-		@RequestParam(value="comment") String comment) {
-		
+		@RequestParam("name") String name,
+		@RequestParam("dojo") String dojo,
+		@RequestParam("stack") String stack,
+		@RequestParam(value="comment", required=false) String comment) {
+
 		session.setAttribute("name", name);
 		session.setAttribute("dojo", dojo);
 		session.setAttribute("stack", stack);
