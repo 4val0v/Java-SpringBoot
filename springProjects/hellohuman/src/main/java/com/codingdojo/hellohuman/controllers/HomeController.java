@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 	
 	// GET method is implied, but here's how it looks when invoked
-	@RequestMapping(value="", method=RequestMethod.GET)
+	@RequestMapping(path="", method=RequestMethod.GET)
 	public String index(Model model, @RequestParam(value="name", required=false) String q) {
 		if (q == null) {
 			q = "Human";
