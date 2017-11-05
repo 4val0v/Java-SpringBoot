@@ -14,46 +14,28 @@ public class LPController {
 	}
 	
 	@RequestMapping("/m/{c}/0553/{l}")
-	public String lesson(Model model,
-		@PathVariable("c") String c,
-		@PathVariable("l") String l) {
-		
-		if (c.equals("38")) {
-			if (l.equals("0733")) {
-				model.addAttribute("content", "Setting up your servers");
-			}
-			if (l.equals("0342")) {
-				model.addAttribute("content", "Punch Cards");
-			}
-		} else if (c.equals("26")) {
-			if (l.equals("0348")) {
-				model.addAttribute("content", "Advanced Fortran Intro");
-			}
-		} else {
-			model.addAttribute("content", "");
+	public String lesson(Model model, @PathVariable("l") String l) {
+		String content = "";
+		if (l.equals("0733")) {
+			content = "Setting up your servers";
+		} else if (l.equals("0342")) {
+			content = "Punch Cards";
+		} else if (l.equals("0348")) {
+			content = "Advanced Fortran Intro";
 		}
-		
+		model.addAttribute("content", content);
 		return "lesson";
 	}
 	
 	@RequestMapping("/m/{c}/0483/{a}")
-	public String assignment(Model model,
-		@PathVariable("c") String c,
-		@PathVariable("a") String a) {
-		
-		if (c.equals("38")) {
-			if (a.equals("0345")) {
-				model.addAttribute("content", "Coding Forms");
-			}
+	public String assignment(Model model, @PathVariable("a") String a) {
+		String content = "";
+		if (a.equals("0345")) {
+			content = "Coding Forms";
+		} else if (a.equals("2342")) {
+			content = "Fortran to Binary";
 		}
-		if (c.equals("26")) {
-			if (a.equals("2342")) {
-				model.addAttribute("content", "Fortran to Binary");
-			}
-		} else {
-			model.addAttribute("content", "");
-		}
-		
+		model.addAttribute("content", content);
 		return "assignment";
 	}
 	
