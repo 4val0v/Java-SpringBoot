@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>ninjagold</name>
-	<description>Hello Human</description>
+	<description>Ninja Gold</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
