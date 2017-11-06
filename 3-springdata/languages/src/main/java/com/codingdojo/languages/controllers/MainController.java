@@ -32,16 +32,10 @@ public class MainController {
         return "index";
     }
 	
-	@RequestMapping("/{idx}")
-	public String getLanguage(Model model, @PathVariable("idx") int idx) {
-		Language language = languageService.getLanguage(idx);
-		if (language != null) {
-			model.addAttribute("language", language);
-			model.addAttribute("idx", idx);
-			return "language";
-		} else {
-			return "redirect:/";
-		}
+	@RequestMapping("/{id}")
+	public String getLanguage(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("language", languageService.getLanguage(id));
+		return "language";
 	}
 	
 	@PostMapping("/add")
@@ -60,9 +54,9 @@ public class MainController {
 		}
 	}
 	
-    @RequestMapping("/{idx}/edit")
-    public String getEditForm(@PathVariable("idx") int idx, Model model) {
-        Language language = languageService.getLanguage(idx);
+    @RequestMapping("/{id}/edit")
+    public String getEditForm(@PathVariable("id") Long id, Model model) {
+        Language language = languageService.getLanguage(id);
         if (language != null){
             model.addAttribute("language", language);
             return "edit";
@@ -71,23 +65,23 @@ public class MainController {
         }
     }
     
-    @PostMapping("/{idx}/edit")
+    @PostMapping("/{id}/edit")
     public String submitLanguageEdit(
-    		@PathVariable("idx") int idx,
+    		@PathVariable("id") Long id,
     		@Valid @ModelAttribute("language") Language language,
     		BindingResult result) {
     	
         if (result.hasErrors()) {
             return "edit";
         } else {
-            languageService.editLanguage(idx, language);
+            languageService.editLanguage(language);
             return "redirect:/";
         }
     }
     
     @RequestMapping("/{id}/delete")
-    public String deleteLanguage(@PathVariable("id") int idx) {
-        languageService.deleteLanguage(idx);
+    public String deleteLanguage(@PathVariable("id") Long id) {
+        languageService.deleteLanguage(id);
         return "redirect:/";
     }
 	

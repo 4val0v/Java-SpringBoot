@@ -7,7 +7,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Books</title>
+        <title>Languages</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
@@ -25,12 +25,12 @@
 			<td><strong>Edit</strong></td>
 			<td><strong>Delete</strong></td>
 			</tr>
-		<c:forEach items="${languages}" var="language" varStatus="loop">
+		<c:forEach items="${languages}" var="language">
 		    <tr>    
-		    <td><a href="/${loop.index}"><c:out value="${language.name}"/></a></td>
+		    <td><a href="/${language.id}"><c:out value="${language.name}"/></a></td>
 		    <td><c:out value="${language.creator}"/></td>
-		    <td><a href="/${loop.index}/edit">Edit</a></td>
-		    <td><a href="/${loop.index}/delete">Delete</a></td>
+		    <td><a href="/${language.id}/edit">Edit</a></td>
+		    <td><a href="/${language.id}/delete">Delete</a></td>
 		    </tr>
 		</c:forEach>
 		</table>
@@ -39,6 +39,7 @@
 		<h4 class=text-center>Add a Language</h4>
 		
 		<form:form method="POST" action="/add" modelAttribute="language">
+		    <form:hidden path="id"/>
 		    <p>
 		    <form:label path="name">Language<br>
 		    <form:input path="name"/><br>
