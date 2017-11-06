@@ -19,7 +19,6 @@
 	
 		<p>&nbsp;</p>
 		<form:form method="POST" action="/${idx}/edit" modelAttribute="language">
-		    <form:hidden path="id"/>
 		    <p>
 		    <form:label path="name">Language<br>
 		    <form:input path="name"/><br>

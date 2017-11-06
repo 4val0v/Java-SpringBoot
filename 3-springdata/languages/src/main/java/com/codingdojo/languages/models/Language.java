@@ -52,9 +52,7 @@ public class Language {
     private String currentVersion;
 	
 	public Language() {
-		this.createdAt = new Date();
-		this.updatedAt = new Date();
-    }
+	}
     
     public Language(String name, String creator, String currentVersion, Long id) {
         this.id = id;

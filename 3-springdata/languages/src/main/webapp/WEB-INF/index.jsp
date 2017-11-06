@@ -22,6 +22,7 @@
 			<tr>
 			<td><strong>Language</strong></td>
 			<td><strong>Creator</strong></td>
+			<td><strong>Version</strong></td>
 			<td><strong>Edit</strong></td>
 			<td><strong>Delete</strong></td>
 			</tr>
@@ -29,6 +30,7 @@
 		    <tr>    
 		    <td><a href="/${language.id}"><c:out value="${language.name}"/></a></td>
 		    <td><c:out value="${language.creator}"/></td>
+		    <td><c:out value="${language.currentVersion}"/></td>
 		    <td><a href="/${language.id}/edit">Edit</a></td>
 		    <td><a href="/${language.id}/delete">Delete</a></td>
 		    </tr>
@@ -39,7 +41,6 @@
 		<h4 class=text-center>Add a Language</h4>
 		
 		<form:form method="POST" action="/add" modelAttribute="language">
-		    <form:hidden path="id"/>
 		    <p>
 		    <form:label path="name">Language<br>
 		    <form:input path="name"/><br>
