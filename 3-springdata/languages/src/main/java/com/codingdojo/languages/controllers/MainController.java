@@ -39,7 +39,7 @@ public class MainController {
 	}
 	
 	@PostMapping("/add")
-	public String submitLanguage(Model model,
+	public String addLanguage(Model model,
 		@Valid @ModelAttribute("language") Language language,
 		BindingResult result) {
 		

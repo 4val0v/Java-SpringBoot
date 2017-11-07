@@ -1,6 +1,5 @@
-package com.codingdojo.languages.models;
+package com.codingdojo.lookify.models;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,15 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="languages")
-public class Language {
+public class Song {
 
 	@Id // sets attribute as primary key
 	@GeneratedValue // sets as auto-incrementing value
@@ -40,75 +39,63 @@ public class Language {
     }
 	
 	@NotNull
-	@Size(min = 2, max = 20, message="Please enter a language from 2 to 20 characters.")
-    private String name;
+	@Size(min = 5, max = 255, message="Title must be at least 5 characters.")
+    private String title;
     
 	@NotNull
-    @Size(min = 2, max = 20, message="Please enter a name from 2 to 20 characters.")
-    private String creator;
+    @Size(min = 5, max = 255, message="Artist must be at least 5 characters.")
+    private String artist;
     
 	@NotNull
-    @Size(min = 1, message="Please fill out this field.")
-    private String currentVersion;
+    @Min(value=1, message="Please select a rating between 1 and 10.")
+	@Max(value=10, message="Please select a rating between 1 and 10.")
+    private int rating;
 	
-	public Language() {
-	}
-    
-    public Language(Long id, String name, String creator, String currentVersion) {
-        this.id = id;
-    		this.name = name;
-        this.creator = creator;
-        this.currentVersion = currentVersion;
-        this.createdAt = new Date();
-		this.updatedAt = new Date();
-    }
-	
-    public Long getId() {
+	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public Date getCreatedAt() {
 		return createdAt;
 	}
-
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
-
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
-	public String getCreator() {
-		return creator;
+	public String getArtist() {
+		return artist;
 	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
+	public void setArtist(String artist) {
+		this.artist = artist;
 	}
-
-	public String getCurrentVersion() {
-		return currentVersion;
+	public int getRating() {
+		return rating;
 	}
-
-	public void setCurrentVersion(String currentVersion) {
-		this.currentVersion = currentVersion;
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
+	public Song() {
+	}
+    
+    public Song(Long id, String title, String artist) {
+        this.id = id;
+    		this.title = title;
+        this.artist = artist;
+        this.createdAt = new Date();
+		this.updatedAt = new Date();
+    }
     
 }
