@@ -44,9 +44,9 @@
         <legend><h3>Add a Ninja</h3></legend>
         <form:form method="POST" action="/ninjas/new" modelAttribute="ninja">
             <p>
-            <form:label path="dojo">Dojo<br>
+            <form:label path="dojo">
             <form:select path="dojo">
-                <form:option value="0" label="Select Location"/>
+                <form:option value="0" label="Select Dojo"/>
                 <c:forEach items="${dojos}" var="d">
                 <form:option value="${d.id}" label="${d.name}"/>
                 </c:forEach>
