@@ -1,0 +1,9 @@
+*{
+	/* outline: 1px solid red; */
+}
+
+.outer{
+    width: 20%;
+    padding: 15px;
+    margin: 10px;
+}

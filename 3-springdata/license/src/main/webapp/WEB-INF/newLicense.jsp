@@ -44,7 +44,7 @@ pageEncoding="UTF-8"%>
 		</p>
 		<p>
 		<form:label path="expiration">Expiration Date<br>
-		<input type="date" name="expiration"><br>
+		<form:input path="expiration" type="date"/><br>
 		<small style=color:red><form:errors path="expiration"/></small>
 		</form:label>
 		</p>

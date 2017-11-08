@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,6 +28,7 @@ public class License {
 	@JoinColumn(name="person_id")
 	private Person person;
 	private String number;
+	@Future
 	@NotNull(message="Please enter a date.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiration;
