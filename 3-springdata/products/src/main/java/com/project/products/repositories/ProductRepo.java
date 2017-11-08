@@ -10,4 +10,5 @@ import com.project.products.models.Product;
 @Repository
 public interface ProductRepo extends CrudRepository<Product, Long>{
 	List<Product> findAll();
+	List<Product> findByNameNotIn(List<String> name);
 }

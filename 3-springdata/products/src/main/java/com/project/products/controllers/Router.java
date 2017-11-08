@@ -1,7 +1,5 @@
 package com.project.products.controllers;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -41,7 +39,7 @@ public class Router {
 		@PathVariable("id") Long id) {
 		
 		model.addAttribute("product", store.getProduct(id));
-		model.addAttribute("categories", store.getCategories());
+		model.addAttribute("categories", store.listAvailCategories(store.getProduct(id)));
 		
 		return "showProd";
 	}
@@ -51,7 +49,7 @@ public class Router {
 		@PathVariable("id") Long id) {
 		
 		model.addAttribute("category", store.getCategory(id));
-		model.addAttribute("products", store.getProducts());
+		model.addAttribute("products", store.listAvailProducts(store.getCategory(id)));
 		
 		return "showCat";
 	}
@@ -62,10 +60,8 @@ public class Router {
 		@ModelAttribute("product") Product product, BindingResult res) {
 		
 		if (res.hasErrors()) {
-			List<Category> categories = store.getCategories();
-			model.addAttribute("categories", categories);
-			List<Product> products = store.getProducts();
-			model.addAttribute("products", products);
+			model.addAttribute("categories", store.getCategories());
+			model.addAttribute("products", store.getProducts());
 			return "index";
 			
 		} else {
@@ -80,10 +76,8 @@ public class Router {
 		@ModelAttribute("category") Category category, BindingResult res) {
 		
 		if (res.hasErrors()) {
-			List<Category> categories = store.getCategories();
-			model.addAttribute("categories", categories);
-			List<Product> products = store.getProducts();
-			model.addAttribute("products", products);
+			model.addAttribute("categories", store.getCategories());
+			model.addAttribute("products", store.getProducts());
 			return "index";
 			
 		} else {

@@ -18,7 +18,7 @@
 		<p>&nbsp;</p>
 		<h3><strong>${product.name}</strong></h3>
 		<p>Description: ${product.description}</p>
-		<p>Price: ${product.price}</p>
+		<p>Price: $${product.price}</p>
 		<hr>
 		<p><strong>Categories:</strong></p>
 		<ul>

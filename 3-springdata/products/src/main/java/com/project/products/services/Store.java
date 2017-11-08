@@ -1,5 +1,6 @@
 package com.project.products.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +25,21 @@ public class Store {
 		return catRepo.findAll();
 	}
 	
+	public List<Category> listAvailCategories(Product product) {
+		List<String> names = new ArrayList<String>();
+		List<Category> current = product.getCategories();
+		
+		if (current.isEmpty()) {
+			names.add("");
+		} else {
+			for (Category c: current) {
+				names.add(c.getName());
+			}
+		}
+		List<Category> categories = catRepo.findByNameNotIn(names);
+		return categories;
+	}
+	
 	public Category getCategory(Long id) {
 		return catRepo.findOne(id);
 	}
@@ -34,6 +50,21 @@ public class Store {
 	
 	public List<Product> getProducts() {
 		return prodRepo.findAll();
+	}
+	
+	public List<Product> listAvailProducts(Category category) {
+		List<String> names = new ArrayList<String>();
+		List<Product> current = category.getProducts();
+		
+		if (current.isEmpty()) {
+			names.add("");
+		} else {
+			for (Product c: current) {
+				names.add(c.getName());
+			}
+		}
+		List<Product> products = prodRepo.findByNameNotIn(names);
+		return products;
 	}
 	
 	public Product getProduct(Long id) {

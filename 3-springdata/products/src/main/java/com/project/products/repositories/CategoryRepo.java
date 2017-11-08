@@ -10,4 +10,5 @@ import com.project.products.models.Category;
 @Repository
 public interface CategoryRepo extends CrudRepository<Category, Long>{
 	List<Category> findAll();
+	List<Category> findByNameNotIn(List<String> name);
 }
