@@ -41,12 +41,11 @@ public class DojoController {
 	@RequestMapping("")
 	public String dashboard(Model m) {
 		m.addAttribute("qs", qs.all());
-		// for tags, iterate thru tags list object from questions
 		return "dashboard";
 	}
 	
 	@RequestMapping("/new")
-	public String newQ(@ModelAttribute("q") Question q) {
+	public String newQ() {
 		return "newQ";
 	}
 	
