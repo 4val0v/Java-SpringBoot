@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.auth.models.User;
-import com.project.auth.services.UserDetailsAuthService;
 import com.project.auth.services.UserService;
 import com.project.auth.validators.UserValidator;
 
@@ -23,11 +22,9 @@ import com.project.auth.validators.UserValidator;
 public class Users {
 	
 	private UserService us;
-	private UserDetailsAuthService udas;
 	private UserValidator uv;
-	public Users (UserService us, UserDetailsAuthService udas, UserValidator uv) {
+	public Users (UserService us, UserValidator uv) {
 		this.us = us;
-		this.udas = udas;
 		this.uv = uv;
 	}
 	
@@ -55,18 +52,24 @@ public class Users {
 			return "landing";
 		}
 		
-		if (us.listAdmins().size() == 0) {
+		if (us.listAdmins().isEmpty()) {
 			us.createSuper(u);
 		} else {
 			us.createUser(u);
 		}
+		
 		return "redirect:/";
 	}
 	
 	@RequestMapping("/dashboard")
 	public String dash(Principal p, Model m) {
 		String u = p.getName();
-		us.recordLogin(us.findByUsername(u));
+		User user = us.findByUsername(u);
+		us.recordLogin(user);
+		if (user.getLevel().equals("Super")
+		  | user.getLevel().equals("Admin")) {
+			return "redirect:/admin";
+		}
 		m.addAttribute("user", us.findByUsername(u));
 		return "dash";
 	}
@@ -74,7 +77,6 @@ public class Users {
 	@RequestMapping("/admin")
 	public String admin(Principal p, Model m) {
 		String u = p.getName();
-		us.recordLogin(us.findByUsername(u));
 		m.addAttribute("user", us.findByUsername(u));
 		m.addAttribute("users", us.findAll());
 		return "admin";
