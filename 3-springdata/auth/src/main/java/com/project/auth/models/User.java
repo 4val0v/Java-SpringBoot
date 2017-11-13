@@ -44,13 +44,14 @@ public class User {
 	private Date updatedAt;
 	private Date lastLogin;
 	
+	private String level;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name = "users_roles",
 		joinColumns = @JoinColumn(name = "user_id"),
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private List<Role> roles;
-	
 	
 	public Long getId() {
 		return id;
@@ -141,6 +142,14 @@ public class User {
 
 	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+
+	public String getLevel() {
+		return level;
+	}
+
+	public void setLevel(String level) {
+		this.level = level;
 	}
 	
 }

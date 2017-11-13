@@ -27,18 +27,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.
-			authorizeRequests() // restrict access via HttpServletRequest
-				// all under "/static" and "/registration" permitted to all
+			authorizeRequests()
+				// static folders and "/register" permitted to all
 				.antMatchers("/css/**", "/js/**", "/register").permitAll()
-				.anyRequest().authenticated() // other requests require auth
+				.antMatchers("/admin/**").access("hasRole('ADMIN')")
+				.anyRequest().authenticated()
 				.and()
-			.formLogin() // specify form-based authentication (versus pop-up)
-				.loginPage("/") // URL to send users to for login
-				.defaultSuccessUrl("/dashboard")
+			.formLogin() // for form-based authentication
+				.loginPage("/") // URL for login page
+				.defaultSuccessUrl("/dashboard") // URL for success page
 				.permitAll()
 				.and()
-			.logout() // accessing /logout will invalidate a user's session
-				.permitAll(); // anyone can access /logout
+			.logout() // by default, logout is /logout
+				.permitAll();
 	}
 	
 	@Autowired

@@ -6,13 +6,11 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.project.auth.models.Role;
+import com.project.auth.models.UserRole;
 
 @Repository
-public interface RoleRepo extends CrudRepository<Role, Long>{
-	
-	List<Role> findAll(); // list user, admin, and super
-	
-	Role findByName(String name);
-	List<Role> findAllByName(String name);
+public interface UserRoleRepo extends CrudRepository<UserRole, Long> {
+
+	List<UserRole> findByRole(List<Role> roles);
 	
 }

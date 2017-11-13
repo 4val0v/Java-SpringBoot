@@ -29,11 +29,11 @@
         </td></tr></thead>
         <tbody>
             <c:forEach items="${employee.manager.employees}" var="e">
-            <if test="${e} != ${employee}">
+            <c:if test="${e != employee}">
         <tr><td>
             <a href="/employee/${e.id}">${e.first_name} ${e.last_name}</a>
         </td></tr>
-            </if>
+            </c:if>
             </c:forEach>
         </tbody>
         </table>
