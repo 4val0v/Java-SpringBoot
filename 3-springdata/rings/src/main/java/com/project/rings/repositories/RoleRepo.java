@@ -1,11 +1,11 @@
-package com.project.auth.repositories;
+package com.project.rings.repositories;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.project.auth.models.Role;
+import com.project.rings.models.Role;
 
 @Repository
 public interface RoleRepo extends CrudRepository<Role, Long>{

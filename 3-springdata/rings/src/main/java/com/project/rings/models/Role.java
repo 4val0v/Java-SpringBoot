@@ -1,4 +1,4 @@
-package com.project.auth.models;
+package com.project.rings.models;
 
 import java.util.List;
 
@@ -44,13 +44,9 @@ public class Role {
 	}
 	
 	public Role(){}
-
+	
 	public Role(String name) {
 		this.name = name;
 	}
-	
-	// INSERT INTO `role` (name) VALUES ('ROLE_USER')
-	// INSERT INTO `role` (name) VALUES ('ROLE_ADMIN')
-	// INSERT INTO `role` (name) VALUES ('ROLE_SUPER')
 	
 }

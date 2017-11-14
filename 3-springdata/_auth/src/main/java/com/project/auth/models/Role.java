@@ -44,10 +44,6 @@ public class Role {
 	}
 	
 	public Role(){}
-
-	public Role(String name) {
-		this.name = name;
-	}
 	
 	// INSERT INTO `role` (name) VALUES ('ROLE_USER')
 	// INSERT INTO `role` (name) VALUES ('ROLE_ADMIN')

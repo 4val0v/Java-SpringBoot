@@ -1,18 +1,17 @@
-package com.project.auth.services;
+package com.project.rings.services;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.auth.models.Role;
-import com.project.auth.models.User;
-import com.project.auth.models.UserRole;
-import com.project.auth.repositories.RoleRepo;
-import com.project.auth.repositories.UserRepo;
-import com.project.auth.repositories.UserRoleRepo;
+import com.project.rings.models.Role;
+import com.project.rings.models.User;
+import com.project.rings.models.UserRole;
+import com.project.rings.repositories.RoleRepo;
+import com.project.rings.repositories.UserRepo;
+import com.project.rings.repositories.UserRoleRepo;
 
 @Service
 public class UserService {
@@ -29,19 +28,18 @@ public class UserService {
 		this.bCrypt = bCrypt;
 	}
 	
-	public void createSuper(User user) {
+	public void createAdmin(User user) {
 		if (roleRepo.findAll().isEmpty()) {
 			roleRepo.save(new Role("ROLE_USER"));
 			roleRepo.save(new Role("ROLE_ADMIN"));
-			roleRepo.save(new Role("ROLE_SUPER"));
 		}
 		user.setPassword(bCrypt.encode(user.getPassword()));
-		List<Role> superadmin = new ArrayList<Role>();
-		superadmin.add(roleRepo.findByName("ROLE_USER"));
-		superadmin.add(roleRepo.findByName("ROLE_ADMIN"));
-		superadmin.add(roleRepo.findByName("ROLE_SUPER"));
-		user.setRoles(superadmin);
-		user.setLevel("Super");
+		List<Role> useradmin = new ArrayList<Role>();
+		useradmin.add(roleRepo.findByName("ROLE_USER"));
+		useradmin.add(roleRepo.findByName("ROLE_ADMIN"));
+		user.setRoles(useradmin);
+		user.setLevel("Admin");
+		user.setGreatAinur(true);
 		userRepo.save(user);
 	}
 	
@@ -75,7 +73,7 @@ public class UserService {
 		return userRepo.findById(id);
 	}
 	
-	public void deleteUser(User user) {
+	public void destroyUser(User user) {
 		userRepo.delete(user);
 	}
 	
@@ -83,17 +81,17 @@ public class UserService {
 		return userRepo.findAll();
 	}
 	
-	public void recordLogin(User user) {
-		user.setLastLogin(new Date());
-		userRepo.save(user);
-	}
-	
-	public List<Role> listByName(String name) {
-		return roleRepo.findAllByName(name);
-	}
-	
 	public List<UserRole> listAdmins() {
 		return urRepo.findByRole(roleRepo.findAllByName("ROLE_ADMIN"));
+	}
+	
+	public User isGreatAinur(boolean option) {
+		return userRepo.findByGreatAinur(option);
+	}
+	
+	public void updateUser(User user, String username) {
+		user.setUsername(username);
+		userRepo.save(user);
 	}
 	
 }

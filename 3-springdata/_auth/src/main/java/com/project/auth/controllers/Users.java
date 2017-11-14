@@ -2,6 +2,7 @@ package com.project.auth.controllers;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -44,7 +45,7 @@ public class Users {
 	
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute("user") User u,
-		BindingResult r, Model m) {
+		BindingResult r, Model m, HttpSession s) {
 		
 		uv.validate(u, r);
 		if (r.hasErrors()) {

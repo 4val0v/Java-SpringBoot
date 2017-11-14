@@ -1,22 +1,27 @@
-package com.project.auth.models;
+package com.project.rings.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.Size;
 
 @Entity
-public class Role {
+public class Guild {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+	@Size(min = 3)
 	private String name;
+	private Date createdAt;
+	private Date updatedAt;
 	
-	@ManyToMany(mappedBy = "roles")
+	@ManyToMany(mappedBy = "guilds")
+	@Size(max = 3)
 	private List<User> users;
 	
 	public Long getId() {
@@ -35,6 +40,22 @@ public class Role {
 		this.name = name;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
 	public List<User> getUsers() {
 		return users;
 	}
@@ -42,15 +63,5 @@ public class Role {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	
-	public Role(){}
-
-	public Role(String name) {
-		this.name = name;
-	}
-	
-	// INSERT INTO `role` (name) VALUES ('ROLE_USER')
-	// INSERT INTO `role` (name) VALUES ('ROLE_ADMIN')
-	// INSERT INTO `role` (name) VALUES ('ROLE_SUPER')
 	
 }

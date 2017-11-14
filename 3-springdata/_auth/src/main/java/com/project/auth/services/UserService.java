@@ -30,11 +30,6 @@ public class UserService {
 	}
 	
 	public void createSuper(User user) {
-		if (roleRepo.findAll().isEmpty()) {
-			roleRepo.save(new Role("ROLE_USER"));
-			roleRepo.save(new Role("ROLE_ADMIN"));
-			roleRepo.save(new Role("ROLE_SUPER"));
-		}
 		user.setPassword(bCrypt.encode(user.getPassword()));
 		List<Role> superadmin = new ArrayList<Role>();
 		superadmin.add(roleRepo.findByName("ROLE_USER"));
