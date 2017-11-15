@@ -15,81 +15,63 @@ import com.project.auth.repositories.UserRepo;
 @Service
 public class UserService {
 	
-	private UserRepo userRepo;
-	private RoleRepo roleRepo;
-	private BCryptPasswordEncoder bCrypt;
-	
-	public UserService(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder bCrypt) {
-		this.userRepo = userRepo;
-		this.roleRepo = roleRepo;
-		this.bCrypt = bCrypt;
+	private UserRepo ur; private RoleRepo rr; private BCryptPasswordEncoder bc;
+	public UserService(UserRepo ur, RoleRepo rr, BCryptPasswordEncoder bc) {
+		this.ur = ur; this.rr = rr; this.bc = bc;
 	}
-	
+
+
+	// Create
+
 	public void createSuper(User user) {
-		if (roleRepo.findAll().isEmpty()) {
-			roleRepo.save(new Role("ROLE_USER"));
-			roleRepo.save(new Role("ROLE_ADMIN"));
-			roleRepo.save(new Role("ROLE_SUPER"));
-		}
-		user.setPassword(bCrypt.encode(user.getPassword()));
+		if (rr.findAll().isEmpty()) {
+			rr.save(new Role("ROLE_USER"));
+			rr.save(new Role("ROLE_ADMIN"));
+			rr.save(new Role("ROLE_SUPER")); }
+		user.setPassword(bc.encode(user.getPassword()));
 		List<Role> superadmin = new ArrayList<Role>();
-		superadmin.add(roleRepo.findByName("ROLE_USER"));
-		superadmin.add(roleRepo.findByName("ROLE_ADMIN"));
-		superadmin.add(roleRepo.findByName("ROLE_SUPER"));
+		superadmin.add(rr.findByName("ROLE_USER"));
+		superadmin.add(rr.findByName("ROLE_ADMIN"));
+		superadmin.add(rr.findByName("ROLE_SUPER"));
 		user.setRoles(superadmin);
 		user.setLevel("Super");
-		userRepo.save(user);
+		ur.save(user);
 	}
 	
 	public void createUser(User user) {
-		user.setPassword(bCrypt.encode(user.getPassword()));
-		user.setRoles(roleRepo.findAllByName("ROLE_USER"));
+		user.setPassword(bc.encode(user.getPassword()));
+		user.setRoles(rr.findAllByName("ROLE_USER"));
 		user.setLevel("User");
-		userRepo.save(user);
+		ur.save(user);
 	}
-	
+
+
+	// Update
+	public void updateLastLogin(User user) {user.setLastLogin(new Date()); ur.save(user); }
+	public void delete(User user) { ur.delete(user); }
+
 	public void makeAdmin(User user) {
 		List<Role> useradmin = new ArrayList<Role>();
-		useradmin.add(roleRepo.findByName("ROLE_USER"));
-		useradmin.add(roleRepo.findByName("ROLE_ADMIN"));
+		useradmin.add(rr.findByName("ROLE_USER"));
+		useradmin.add(rr.findByName("ROLE_ADMIN"));
 		user.setRoles(useradmin);
 		user.setLevel("Admin");
-		userRepo.save(user);
+		ur.save(user);
 	}
 	
 	public void makeUser(User user) {
-		user.setRoles(roleRepo.findAllByName("ROLE_USER"));
+		user.setRoles(rr.findAllByName("ROLE_USER"));
 		user.setLevel("User");
-		userRepo.save(user);
+		ur.save(user);
 	}
-	
-	public User findByUsername(String username) {
-		return userRepo.findByUsername(username);
-	}
-	
-	public User findById(Long id) {
-		return userRepo.findById(id);
-	}
-	
-	public void delete(User user) {
-		userRepo.delete(user);
-	}
-	
-	public List<User> getAll() {
-		return userRepo.findAll();
-	}
-	
-	public void recordLogin(User user) {
-		user.setLastLogin(new Date());
-		userRepo.save(user);
-	}
-	
-	public List<Role> listByName(String name) {
-		return roleRepo.findAllByName(name);
-	}
-	
-	public List<User> listByLevel(String level) {
-		return userRepo.findByLevel(level);
-	}
+
+
+	// Basic retrieval
+	public List<User> getAll() {return ur.findAll();}
+	public List<User> getAllByLevel(String level) {return ur.findByLevel(level);}
+	public User getByUsername(String username) {return ur.findByUsername(username);}
+	public User get(Long id) {return ur.findById(id);}
+	public long count() {return ur.count();}
+	// public List<Role> listByName(String name) {return rr.findAllByName(name);}
 	
 }

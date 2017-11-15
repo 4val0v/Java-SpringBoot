@@ -35,24 +35,18 @@
 
 	<h4><br>
 		<c:if test="${error != null}">
-			<span style="color: red">
 			<strong>${error}</strong>
 			<br>Please try again.
-			</span>
 		</c:if>
 
 		<c:if test="${logout != null}">
-			<span style="color: blue">
 			<strong>${logout}</strong>
 			<br>See you next time!
-			</span>
 		</c:if>
 		
 		<c:if test="${thanks != null}">
-			<span style="color: green">
 			<strong>${thanks}</strong>
 			<br>You may now login.
-			</span>
 		</c:if>
 	</h4>
 </div>
@@ -83,15 +77,15 @@
 </div>
 
 <div class="col-sm-4" style="margin: 10% 0">
-	<h4 style="color: red">
+	<h4>
 		<c:if test="${errors != null}">
-		<p>You missed a few things...</p>
-		</c:if>
+		<p><strong>Cannot create account!</strong>
 		<p><form:errors path="username"/></p>
 		<p><form:errors path="email"/></p>
 		<p><form:errors path="first"/></p>
 		<p><form:errors path="last"/></p>
 		<p><form:errors path="password"/></p>
+		</c:if>
 	</h4>
 	</form:form>
 </div>

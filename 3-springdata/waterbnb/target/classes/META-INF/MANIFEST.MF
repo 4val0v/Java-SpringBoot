@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: waterbnb
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: bcm
+Implementation-Vendor-Id: com.project.waterbnb
+Build-Jdk: 1.8.0_151
+Implementation-URL: http://projects.spring.io/spring-boot/waterbnb/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

@@ -26,10 +26,10 @@
 	</form>
 	</div>
 	
-	<h2>Welcome, ${user.first}!</h2>
+	<h2>Welcome, ${user.username}!</h2>
 	<p>First Name: ${user.first}</p>
 	<p>Last Name: ${user.last}</p>
-	<p>Email: ${user.username}</p>
+	<p>Email: ${user.email}</p>
 	<p>Sign up date: <fmt:formatDate type="date" value="${user.createdAt}"/></p>
 	<p>Last sign in: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${user.lastLogin}"/></p>
 

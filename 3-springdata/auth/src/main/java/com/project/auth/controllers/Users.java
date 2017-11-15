@@ -45,15 +45,15 @@ public class Users {
 		
 		uv.validate(u, r);
 		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
-		if (us.listByLevel("Super").isEmpty()) { us.createSuper(u); }
+		if (us.getAllByLevel("Super").isEmpty()) { us.createSuper(u); }
 		else { us.createUser(u); f.addFlashAttribute("thanks", "Thanks for signing up!"); }
 		return "redirect:/";
 	}
 	
 	@RequestMapping("/dashboard")
 	public String dash(Principal p, Model m) {
-		User user = us.findByUsername(p.getName());
-		us.recordLogin(user);
+		User user = us.getByUsername(p.getName());
+		us.updateLastLogin(user);
 		if (user.getLevel().equals("User")) {
 			m.addAttribute("user", user);
 			return "dash"; }
@@ -62,26 +62,26 @@ public class Users {
 	
 	@RequestMapping("/admin")
 	public String admin(Principal p, Model m) {
-		m.addAttribute("user", us.findByUsername(p.getName()));
+		m.addAttribute("user", us.getByUsername(p.getName()));
 		m.addAttribute("users", us.getAll());
 		return "admin";
 	}
 	
 	@RequestMapping("/admin/user{u}/promote")
 	public String promote(@PathVariable("u") Long u) {
-		us.makeAdmin(us.findById(u));
+		us.makeAdmin(us.get(u));
 		return "redirect:/admin";
 	}
 	
 	@RequestMapping("/admin/user{u}/demote")
 	public String demote(@PathVariable("u") Long u) {
-		us.makeUser(us.findById(u));
+		us.makeUser(us.get(u));
 		return "redirect:/admin";
 	}
 	
 	@RequestMapping("/admin/user{u}/delete")
 	public String delete(@PathVariable("u") Long u) {
-		us.delete(us.findById(u));
+		us.delete(us.get(u));
 		return "redirect:/admin";
 	}
 	

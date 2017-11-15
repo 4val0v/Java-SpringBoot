@@ -31,7 +31,7 @@
 	<table class="table table-striped table-bordered">
 		<thead>
 			<tr>
-				<td><strong>Name</strong></td>
+				<td><strong>Username</strong></td>
 				<td><strong>Email</strong></td>
 				<td><strong>Level</strong></td>
 				<td><strong>Promote</strong></td>
@@ -42,8 +42,8 @@
 			<c:forEach items="${users}" var="u">
 			<c:if test="${u.level != 'Super'}">
 			<tr>
-				<td>${u.first} ${u.last}</td>
 				<td>${u.username}</td>
+				<td>${u.email}</td>
 				<td>${u.level}</td>
 				<td>
 				<c:choose>
