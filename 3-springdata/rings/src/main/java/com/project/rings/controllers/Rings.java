@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.rings.models.Guild;
 import com.project.rings.models.Ring;
-import com.project.rings.models.User;
 import com.project.rings.services.RingsService;
 import com.project.rings.services.UserService;
 

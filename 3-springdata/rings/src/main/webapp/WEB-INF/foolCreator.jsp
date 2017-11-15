@@ -40,7 +40,12 @@
 						<a href="/guild/${g.id}">${g.name}</a><br>
 					</c:forEach>
 				</td>
-				<td>${u.createdAt.getTime() - java.util.Date().getTime() / (1000*60*60*24)}</td>
+				<td>
+					<c:set var="now" value="<%=new java.util.Date()%>" />
+					<c:set var="then" value="${u.createdAt}" />
+					<c:set var="age" value="${((now.getTime() - then.getTime())) / (60*60*24*1000)}" />
+					<fmt:formatNumber value="${age}" type="number" maxFractionDigits="0" />
+				</td>
 				<c:if test="${u.level != 'Admin'}">
 					<td><a href="/fool_updater/${u.id}/destroy">Destroy</a></td>
 					<td><a href="/fool_updater/${u.id}/promote">Promote</a></td>

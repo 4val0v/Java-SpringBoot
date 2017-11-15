@@ -1,10 +1,10 @@
-package com.project.auth.validators;
+package com.project.auth2.validators;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.project.auth.models.User;
+import com.project.auth2.models.User;
 
 @Component
 public class UserValidator implements Validator {
