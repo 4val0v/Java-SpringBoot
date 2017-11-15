@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.
 			authorizeRequests()
 				// static folders and "/register" permitted to all
-				.antMatchers("/css/**", "/js/**", "/register").permitAll()
+				.antMatchers("/static/**", "/register").permitAll()
 				.antMatchers("/admin/**").access("hasRole('ADMIN')")
 				.anyRequest().authenticated()
 				.and()

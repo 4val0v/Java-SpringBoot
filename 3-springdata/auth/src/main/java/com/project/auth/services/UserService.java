@@ -9,23 +9,19 @@ import org.springframework.stereotype.Service;
 
 import com.project.auth.models.Role;
 import com.project.auth.models.User;
-import com.project.auth.models.UserRole;
 import com.project.auth.repositories.RoleRepo;
 import com.project.auth.repositories.UserRepo;
-import com.project.auth.repositories.UserRoleRepo;
 
 @Service
 public class UserService {
 	
 	private UserRepo userRepo;
 	private RoleRepo roleRepo;
-	private UserRoleRepo urRepo;
 	private BCryptPasswordEncoder bCrypt;
 	
-	public UserService(UserRepo userRepo, RoleRepo roleRepo, UserRoleRepo urRepo, BCryptPasswordEncoder bCrypt) {
+	public UserService(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder bCrypt) {
 		this.userRepo = userRepo;
 		this.roleRepo = roleRepo;
-		this.urRepo = urRepo;
 		this.bCrypt = bCrypt;
 	}
 	
@@ -75,11 +71,11 @@ public class UserService {
 		return userRepo.findById(id);
 	}
 	
-	public void deleteUser(User user) {
+	public void delete(User user) {
 		userRepo.delete(user);
 	}
 	
-	public List<User> findAll() {
+	public List<User> getAll() {
 		return userRepo.findAll();
 	}
 	
@@ -92,8 +88,8 @@ public class UserService {
 		return roleRepo.findAllByName(name);
 	}
 	
-	public List<UserRole> listAdmins() {
-		return urRepo.findByRole(roleRepo.findAllByName("ROLE_ADMIN"));
+	public List<User> listByLevel(String level) {
+		return userRepo.findByLevel(level);
 	}
 	
 }

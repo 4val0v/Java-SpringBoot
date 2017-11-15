@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.auth.models.User;
 import com.project.auth.services.UserService;
@@ -33,51 +34,36 @@ public class Users {
 		@RequestParam(value="error", required=false) String e,
 		@RequestParam(value="logout", required=false) String l) {
 		
-		if (e != null) {
-			m.addAttribute("error", "Invalid credentials. Please try again.");
-		}
-		if (l != null) {
-			m.addAttribute("logout", "Thanks for visiting the site!");
-		}
+		if (e != null) { m.addAttribute("error", "Invalid credentials."); }
+		if (l != null) { m.addAttribute("logout", "Thanks for visiting!"); }
 		return "landing";
 	}
 	
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute("user") User u,
-		BindingResult r, Model m) {
+		BindingResult r, Model m, RedirectAttributes f) {
 		
 		uv.validate(u, r);
-		if (r.hasErrors()) {
-			return "landing";
-		}
-		
-		if (us.listAdmins().isEmpty()) {
-			us.createSuper(u);
-		} else {
-			us.createUser(u);
-		}
-		
+		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
+		if (us.listByLevel("Super").isEmpty()) { us.createSuper(u); }
+		else { us.createUser(u); f.addFlashAttribute("thanks", "Thanks for signing up!"); }
 		return "redirect:/";
 	}
 	
 	@RequestMapping("/dashboard")
 	public String dash(Principal p, Model m) {
-		String u = p.getName();
-		User user = us.findByUsername(u);
+		User user = us.findByUsername(p.getName());
 		us.recordLogin(user);
-		if (user.getLevel().equals("Super")
-		  | user.getLevel().equals("Admin")) {
-			return "redirect:/admin";
-		}
-		m.addAttribute("user", us.findByUsername(u));
-		return "dash";
+		if (user.getLevel().equals("User")) {
+			m.addAttribute("user", user);
+			return "dash"; }
+		else { return "redirect:/admin"; }
 	}
 	
 	@RequestMapping("/admin")
 	public String admin(Principal p, Model m) {
-		String u = p.getName();
-		m.addAttribute("user", us.findByUsername(u));
-		m.addAttribute("users", us.findAll());
+		m.addAttribute("user", us.findByUsername(p.getName()));
+		m.addAttribute("users", us.getAll());
 		return "admin";
 	}
 	
@@ -95,7 +81,7 @@ public class Users {
 	
 	@RequestMapping("/admin/user{u}/delete")
 	public String delete(@PathVariable("u") Long u) {
-		us.deleteUser(us.findById(u));
+		us.delete(us.findById(u));
 		return "redirect:/admin";
 	}
 	

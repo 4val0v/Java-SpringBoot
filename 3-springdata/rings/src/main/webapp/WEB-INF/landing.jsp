@@ -39,7 +39,6 @@
 			<span style="color:red"><strong>${error}</strong>
 			</c:if>
 		</p>
-		
 	</form>
 	
 	<h2>Join</h2>

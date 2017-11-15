@@ -15,10 +15,10 @@ import com.project.auth.models.User;
 import com.project.auth.repositories.UserRepo;
 
 @Service
-public class UserDetailService implements UserDetailsService {
+public class UserAuthService implements UserDetailsService {
 	private UserRepo repo;
 	
-	public UserDetailService(UserRepo repo) {
+	public UserAuthService(UserRepo repo) {
 		this.repo = repo;
 	}
 	

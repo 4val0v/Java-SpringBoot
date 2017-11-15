@@ -17,65 +17,84 @@
 <div class=container>
 <div class=row>
 
-<div class=col-sm-4></div>
-
-<div class="col-sm-4"><p>&nbsp;</p>
-
-	<c:if test="${logout != null}">
-	<p class=text-center>
-		<strong>${logout}</strong>
-		<br>Please come back again soon.
-	</p>
-    </c:if>
-	
+<div class="col-sm-4 text-center" style="margin: 5% 0">
 	<h3>Login</h3>
     
-	<form method="POST" action="/" class=form-inline>
+	<form method="POST" action="/">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
- 		<div class=form-group>
-			<input type="text" name="username" class="form-control input-sm" placeholder=Email />
+ 		<div class="form-group">
+			<input type="text" name="username" class="form-control input-md" placeholder=Username />
 		</div>
 		<div class="form-group">
-			<input type="password" name="password" class="form-control input-sm" placeholder=Password />
+			<input type="password" name="password" class="form-control input-md" placeholder=Password />
 		</div>
-		<div class="form-group input-group-btn">
-			<button type="submit" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-circle-arrow-right"></i></button>
-		</div>
-		<c:if test="${error != null}">
-		<p style="color:red"><small>${error}</small></p>
-    		</c:if>
-		
+		<p>
+			<input type="submit" value="Login" class="btn btn-success btn-md"/>
+		</p>
 	</form>
-	
+
+	<h4><br>
+		<c:if test="${error != null}">
+			<span style="color: red">
+			<strong>${error}</strong>
+			<br>Please try again.
+			</span>
+		</c:if>
+
+		<c:if test="${logout != null}">
+			<span style="color: blue">
+			<strong>${logout}</strong>
+			<br>See you next time!
+			</span>
+		</c:if>
+		
+		<c:if test="${thanks != null}">
+			<span style="color: green">
+			<strong>${thanks}</strong>
+			<br>You may now login.
+			</span>
+		</c:if>
+	</h4>
+</div>
+
+<div class="col-sm-4 text-center" style="margin: 5% 0">
 	<h3>Register</h3>
     
 	<form:form method="POST" action="/register" modelAttribute="user">
 		<div class=form-group>
-			<form:input path="username" cssClass="form-control input-sm" placeholder="Email"/>
-			<small style="color: red"><form:errors path="username"/></small>
+			<form:input path="username" cssClass="form-control input-md" placeholder="Username"/>
 		</div>
 		<div class=form-group>
-			<form:input path="first" cssClass="form-control input-sm" placeholder="First Name"/>
-			<small style="color: red"><form:errors path="first"/></small>
+			<form:input path="email" cssClass="form-control input-md" placeholder="Email Address"/>
+		</div>
+		<!-- <div class=form-group>
+			<form:input path="first" cssClass="form-control input-md" placeholder="First Name"/>
 		</div>
 		<div class=form-group>
-			<form:input path="last" cssClass="form-control input-sm" placeholder="Last Name"/>
-			<small style="color: red"><form:errors path="last"/></small>
+			<form:input path="last" cssClass="form-control input-md" placeholder="Last Name"/>
+		</div> -->
+		<div class=form-group>
+			<form:password path="password" cssClass="form-control input-md" placeholder="Password"/>
 		</div>
 		<div class=form-group>
-			<form:password path="password" cssClass="form-control input-sm" placeholder="Password"/>
-			<small style="color: red"><form:errors path="password"/></small>
+			<form:password path="passwordConfirmation" cssClass="form-control input-md" placeholder="Confirmation"/>
 		</div>
-		<div class=form-group>
-			<form:password path="passwordConfirmation" cssClass="form-control input-sm" placeholder="Confirmation"/>
-			<small style="color: red"><form:errors path="passwordConfirmation"/></small>
-		</div>
-		<p><input type="submit" value="Register" class="btn btn-primary btn-sm"/></p>
-	</form:form>
-
+		<p><input type="submit" value="Register" class="btn btn-primary btn-md"/></p>
 </div>
 
-<div class=col-sm-4></div>
+<div class="col-sm-4" style="margin: 10% 0">
+	<h4 style="color: red">
+		<c:if test="${errors != null}">
+		<p>You missed a few things...</p>
+		</c:if>
+		<p><form:errors path="username"/></p>
+		<p><form:errors path="email"/></p>
+		<p><form:errors path="first"/></p>
+		<p><form:errors path="last"/></p>
+		<p><form:errors path="password"/></p>
+	</h4>
+	</form:form>
+</div>
 	
 </div>
 </div>
