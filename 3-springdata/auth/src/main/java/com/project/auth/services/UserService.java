@@ -1,6 +1,6 @@
 package com.project.auth.services;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,7 +35,7 @@ public class UserService {
 
 	// Update
 	public void updateLastLogin(User user) {
-		user.setLastLogin(new Date());
+		user.setLastLogin(LocalDateTime.now());
 		ur.save(user); }
 	
 	public void delete(User user) { ur.delete(user); }

@@ -1,6 +1,6 @@
 package com.project.auth.models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,28 +21,28 @@ public class User {
 	@Column(unique=true)
 	@Size(min=5)			private String username;
 	@Size(min=5)			private String password;
-	@Transient			private String passwordConfirmation;
-	@Email				private String email;
+	@Transient				private String passwordConfirmation;
+	@Email @Size(min=3)		private String email;
 	@Size(min=3)			private String first;
 	@Size(min=3)			private String last;
-	private Date lastLogin;
+	private LocalDateTime lastLogin;
 	private int level;
 	
 	@Column(updatable=false)
-	@DateTimeFormat(pattern="MM-dd-yyyy HH:mm:ss") private Date createdAt;
-	@DateTimeFormat(pattern="MM-dd-yyyy HH:mm:ss") private Date updatedAt;
-	@PrePersist public void onCreate(){this.createdAt = new Date();}
-	@PreUpdate public void onUpdate(){this.updatedAt = new Date();}
+	@DateTimeFormat(pattern="MM-dd-yyyy HH:mm:ss") private LocalDateTime createdAt;
+	@DateTimeFormat(pattern="MM-dd-yyyy HH:mm:ss") private LocalDateTime updatedAt;
+	@PrePersist public void onCreate(){this.createdAt = LocalDateTime.now();}
+	@PreUpdate public void onUpdate(){this.updatedAt = LocalDateTime.now();}
 	public Long getId() {return id;}
-	public Date getCreatedAt() {return createdAt;}
-	public Date getUpdatedAt() {return updatedAt;}
-	public void setId(long id) {this.id = id;}
-	public void setCreatedAt(Date createdAt) {this.createdAt = createdAt;}
-	public void setUpdatedAt(Date updatedAt) {this.updatedAt = updatedAt;}
+	public LocalDateTime getCreatedAt() {return createdAt;}
+	public LocalDateTime getUpdatedAt() {return updatedAt;}
+	public void setId(Long id) {this.id = id;}
+	public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+	public void setUpdatedAt(LocalDateTime updatedAt) {this.updatedAt = updatedAt;}
 
 	public User(){
-		this.createdAt = new Date();
-		this.updatedAt = new Date();
+		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 	}
 	
 	public String getEmail() {
@@ -81,10 +81,10 @@ public class User {
 	public void setLast(String last) {
 		this.last = last;
 	}
-	public Date getLastLogin() {
+	public LocalDateTime getLastLogin() {
 		return lastLogin;
 	}
-	public void setLastLogin(Date lastLogin) {
+	public void setLastLogin(LocalDateTime lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 	public int getLevel() {
@@ -92,9 +92,6 @@ public class User {
 	}
 	public void setLevel(int level) {
 		this.level = level;
-	}
-	public void setId(Long id) {
-		this.id = id;
 	}
 	
 }
