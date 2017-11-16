@@ -20,10 +20,10 @@
 <div class="col-sm-4 text-center" style="margin: 5% 0">
 	<h3>Login</h3>
     
-	<form method="POST" action="/">
+	<form method="POST" action="/login">
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
  		<div class="form-group">
-			<input type="text" name="username" class="form-control input-md" placeholder=Username/Email />
+			<input type="text" name="username" class="form-control input-md" placeholder=Email />
 		</div>
 		<div class="form-group">
 			<input type="password" name="password" class="form-control input-md" placeholder=Password />
@@ -36,18 +36,21 @@
 	<h4><br>
 		<c:if test="${error != null}">
 			<strong>${error}</strong>
-			<br>Please try again.
+			<br>Please try again.<br><br>
 		</c:if>
 
 		<c:if test="${logout != null}">
 			<strong>${logout}</strong>
-			<br>See you next time!
+			<br>See you next time!<br><br>
 		</c:if>
 		
 		<c:if test="${thanks != null}">
 			<strong>${thanks}</strong>
-			<br>You may now login.
+			<br>You may now login.<br><br>
 		</c:if>
+		
+		<strong><a href="/">Back to Search</a></strong>
+		
 	</h4>
 </div>
 
@@ -55,23 +58,29 @@
 	<h3>Register</h3>
     
 	<form:form method="POST" action="/register" modelAttribute="user">
-		<div class=form-group>
-			<form:input path="username" cssClass="form-control input-md" placeholder="Username"/>
-		</div>
-		<div class=form-group>
-			<form:input path="email" cssClass="form-control input-md" placeholder="Email Address"/>
-		</div>
 		<!-- <div class=form-group>
+			<form:input path="email" cssClass="form-control input-md" placeholder="Email Address"/>
+		</div> -->
+		<div class=form-group>
 			<form:input path="first" cssClass="form-control input-md" placeholder="First Name"/>
 		</div>
 		<div class=form-group>
 			<form:input path="last" cssClass="form-control input-md" placeholder="Last Name"/>
-		</div> -->
+		</div>
+		<div class=form-group>
+			<form:input path="username" cssClass="form-control input-md" placeholder="Email"/>
+		</div>
 		<div class=form-group>
 			<form:password path="password" cssClass="form-control input-md" placeholder="Password"/>
 		</div>
 		<div class=form-group>
 			<form:password path="passwordConfirmation" cssClass="form-control input-md" placeholder="Confirmation"/>
+		</div>
+		<div class=form-group>
+			<form:select path="level" cssClass="form-control input-md">
+				<form:option value="1" label="Guest"/>
+				<form:option value="2" label="Host"/>
+            </form:select>
 		</div>
 		<p><input type="submit" value="Register" class="btn btn-primary btn-md"/></p>
 </div>
@@ -80,10 +89,10 @@
 	<h4>
 		<c:if test="${errors != null}">
 		<p><strong>Cannot create account!</strong>
-		<p><form:errors path="username"/></p>
-		<p><form:errors path="email"/></p>
+		<!-- <p><form:errors path="email"/></p> -->
 		<p><form:errors path="first"/></p>
 		<p><form:errors path="last"/></p>
+		<p><form:errors path="username"/></p>
 		<p><form:errors path="password"/></p>
 		</c:if>
 	</h4>

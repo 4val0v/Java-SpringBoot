@@ -1,13 +1,12 @@
-package com.project.auth.services;
+package com.project.waterbnb.services;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.auth.models.User;
-import com.project.auth.repositories.UserRepo;
+import com.project.waterbnb.models.User;
+import com.project.waterbnb.repositories.UserRepo;
 
 @Service
 public class UserService {
@@ -19,37 +18,10 @@ public class UserService {
 
 
 	// Create
-
-	public void createSuper(User user) {
+	public void create(User user) {
 		user.setPassword(bc.encode(user.getPassword()));
-		user.setLevel(3);
 		ur.save(user);
 	}
-	
-	public void createUser(User user) {
-		user.setPassword(bc.encode(user.getPassword()));
-		user.setLevel(1);
-		ur.save(user);
-	}
-
-
-	// Update
-	public void updateLastLogin(User user) {
-		user.setLastLogin(new Date());
-		ur.save(user); }
-	
-	public void delete(User user) { ur.delete(user); }
-
-	public void promote(User user) {
-		user.setLevel(2);
-		ur.save(user);
-	}
-	
-	public void demote(User user) {
-		user.setLevel(1);
-		ur.save(user);
-	}
-
 
 	// Basic retrieval
 	public List<User> getAll() {return ur.findAll();}

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import com.project.auth.models.User;
+import com.project.waterbnb.models.User;
 
 @Component
 public class UserValidator implements Validator {

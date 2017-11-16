@@ -1,11 +1,11 @@
-package com.project.auth.repositories;
+package com.project.waterbnb.repositories;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.project.auth.models.User;
+import com.project.waterbnb.models.User;
 
 @Repository
 public interface UserRepo extends CrudRepository<User, Long>{

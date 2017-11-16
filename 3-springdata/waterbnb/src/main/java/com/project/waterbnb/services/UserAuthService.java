@@ -1,4 +1,4 @@
-package com.project.auth.services;
+package com.project.waterbnb.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.project.auth.models.User;
-import com.project.auth.repositories.UserRepo;
+import com.project.waterbnb.models.User;
+import com.project.waterbnb.repositories.UserRepo;
 
 @Service
 public class UserAuthService implements UserDetailsService {

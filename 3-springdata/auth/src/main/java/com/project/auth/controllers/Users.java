@@ -30,10 +30,11 @@ public class Users {
 	
 	@RequestMapping("/")
 	public String landing(Model m,
-		@Valid @ModelAttribute("user") User u,
+		@Valid @ModelAttribute("user") User u, Principal p,
 		@RequestParam(value="error", required=false) String e,
 		@RequestParam(value="logout", required=false) String l) {
 		
+		if (p != null) { return "redirect:/dashboard"; }
 		if (e != null) { m.addAttribute("error", "Invalid credentials."); }
 		if (l != null) { m.addAttribute("logout", "Thanks for visiting!"); }
 		return "landing";
@@ -45,8 +46,8 @@ public class Users {
 		
 		uv.validate(u, r);
 		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
-		if (us.getAllByLevel("Super").isEmpty()) { us.createSuper(u); }
-		else { us.createUser(u); f.addFlashAttribute("thanks", "Thanks for signing up!"); }
+		if (us.getByLevel(3).isEmpty()) { us.createSuper(u); }
+		else { us.createUser(u); } f.addFlashAttribute("thanks", "Thanks for signing up!");
 		return "redirect:/";
 	}
 	
@@ -54,10 +55,8 @@ public class Users {
 	public String dash(Principal p, Model m) {
 		User user = us.getByUsername(p.getName());
 		us.updateLastLogin(user);
-		if (user.getLevel().equals("User")) {
-			m.addAttribute("user", user);
-			return "dash"; }
-		else { return "redirect:/admin"; }
+		if (user.getLevel() == 3) { return "redirect:/admin"; }
+		else { m.addAttribute("user", user); return "dash"; }
 	}
 	
 	@RequestMapping("/admin")
@@ -69,13 +68,13 @@ public class Users {
 	
 	@RequestMapping("/admin/user{u}/promote")
 	public String promote(@PathVariable("u") Long u) {
-		us.makeAdmin(us.get(u));
+		us.promote(us.get(u));
 		return "redirect:/admin";
 	}
 	
 	@RequestMapping("/admin/user{u}/demote")
 	public String demote(@PathVariable("u") Long u) {
-		us.makeUser(us.get(u));
+		us.demote(us.get(u));
 		return "redirect:/admin";
 	}
 	

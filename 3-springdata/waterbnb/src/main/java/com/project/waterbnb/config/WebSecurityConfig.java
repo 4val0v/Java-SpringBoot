@@ -26,21 +26,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	@Override
-	public void configure(HttpSecurity http) throws Exception{
-		http.authorizeRequests()
-			// Allow anyone to visit the following routes:
-			.antMatchers("/css/**","/js/**","/register").permitAll()
-			// Allow only admins to visit routes beginning with /admin
-			.antMatchers("/admin/**").access("hasRole('ADMIN')")
-			.anyRequest().authenticated().and()
-		.formLogin()
-			// Default route once a user has logged in:
-			.defaultSuccessUrl("/dashboard",true)
-			// Actual route where a user should login:
-			.loginPage("/login")
-			.permitAll().and()
-		.logout()
-			.permitAll();
+	protected void configure(HttpSecurity http) throws Exception {
+		http.
+			authorizeRequests()
+				// static folders and "/register" permitted to all
+				.antMatchers("/static/**", "/**").permitAll()
+				.antMatchers("/host/**").access("hasRole('ADMIN')")
+				.anyRequest().authenticated()
+				.and()
+			.formLogin() // for form-based authentication
+				.loginPage("/login") // URL for login page
+				.defaultSuccessUrl("/") // URL for success page
+				.permitAll()
+				.and()
+			.logout() // by default, logout is /logout
+				.permitAll();
 	}
 
 	@Autowired

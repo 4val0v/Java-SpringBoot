@@ -20,60 +20,38 @@
 <body>
 <div class=container>
 <div class=row>
-<div class="col-sm-12>
-	
-    <!-- CHOOSE WHEN (WITH SCOPED VAR) -->
-    <c:set var="salary" scope="session" value="${2000*2}"/>
-    <c:choose>
-        <c:when test="${salary <= 0}">Salary is very low to survive.</c:when>
-        <c:when test="${salary > 1000}">Salary is very good.</c:when>
-        <c:otherwise>No comment!</c:otherwise>
-    </c:choose>
 
-    <!-- RANGED FOR LOOP OVER LIST -->
-    <c:forEach items=${list} var="item" begin="1" end="5" varStatus="loop">
-        ${loop.count} (starts at 1)
-        ${item}
-        ${loop.index} (starts at 0)
-    </c:forEach>
+<div class="text-right" style="margin: 2% 0">
+<h4>
+<c:if test="${user == null}">
+<a href="/login">Login/Join</a>
+</c:if>
+<c:if test="${user != null}">
+<p>Hello, ${user.first}!</p>
+<div>
+	<form method="POST" action="/logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<input type="submit" value="Logout" />
+	</form>
+</div>
+</c:if>
+</h4>
+</div>
 
-    <!-- NUMBER FORMATTING --> <c:set var="balance" value="9500.60" />
-    <fmt:setLocale value="en_US"/>
-    <fmt:formatNumber value="${balance}" type="currency"/> $9,500.60
-    <fmt:formatNumber value="${balance}" type="number" maxIntegerDigits="3" /> 500.6
-    <fmt:formatNumber value="${balance}" type="number" maxFractionDigits="1" /> 9,500.6
-    <fmt:formatNumber value="${balance}" type="number" groupingUsed="false" /> 9500.6
-    <fmt:formatNumber value="${balance}" type="percent" maxIntegerDigits="2" /> 60%
-    <fmt:formatNumber value="${balance}" type="number" pattern"###.###E0" /> 9.5006E3
+<div class="col-sm-12" style="margin: 15% 0">
 
-    <!-- INT ONLY NUMBER PARSING --> <c:set var="balance" value="9500.60" />
-    <fmt:parseNumber value="${balance}" var="val" type="number" integerOnly="true" />
-    ${val} 9500
-
-    <!-- DATE FORMATTING -->
-    <c:set var="now" value="<%=new java.util.Date()%>" />
-    <fmt:formatDate type="time" value="${now}" />
-    <fmt:formatDate type="date" value="${now}" />
-    <fmt:formatDate type="both" value="${now}" />
-    <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${now}" />
-    <fmt:formatDate type="both" dateStyle="medium" timeStyle="medium" value="${now}" />
-    <fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${now}" />
-    <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" />
-
-    <!-- TIMEDELTA: Milliseconds to Days -->
-	<c:set var="now" value="<%=new java.util.Date()%>" />
-	<c:set var="then" value="${u.createdAt}" />
-	<c:set var="age" value="${((now.getTime() - then.getTime())) / (60*60*24*1000)}" />
-	<fmt:formatNumber value="${age}" type="number" maxFractionDigits="0" />
-
-    <!-- STRING MANIPULATION --> <c:set var="string" value="String."/>
-    ${fn:toUpperCase(string)}
-    ${fn:toLowerCase(string)}
-    ${fn:split(string, ' ')}
-    ${fn:join(string, ' ')}
-    ${fn:length(string)}
-    ${fn:contains(string, 'r')}
-    ${fn:containsIgnoreCase(string, 'R')}
+    <div class="text-center">
+    <h4>Find places to swim and sleep on WaterBnB!</h4>
+	<form method="POST" action="/search/q" class=form-inline>
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+	    <div class="form-group">
+	        <input type="text" class="form-control input-lg" name=location placeholder="Location">
+	    </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+    </div>
 
 </div>
 </div>

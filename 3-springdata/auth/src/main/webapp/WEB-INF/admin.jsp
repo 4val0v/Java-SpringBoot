@@ -17,16 +17,9 @@
 <div class=container>
 <div class=row>
 
-<div class="col-sm-6">
+<div class="col-sm-6" style="margin: 3% 0">
 	
-	<div class=text-right><p>&nbsp;</p>
-	<form id="logoutForm" method="POST" action="/logout">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="submit" value="Logout" />
-	</form>
-	</div>
-	
-	<h2>User Dashboard</h2>
+	<h2>Admin Settings</h2>
 	
 	<table class="table table-striped table-bordered">
 		<thead>
@@ -40,28 +33,33 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${users}" var="u">
-			<c:if test="${u.level != 'Super'}">
+			<c:if test="${u.level != 3}">
 			<tr>
 				<td>${u.username}</td>
 				<td>${u.email}</td>
 				<td>${u.level}</td>
 				<td>
 				<c:choose>
-					<c:when test="${u.level == 'User'}">
+					<c:when test="${u.level == 1}">
 						<a href="/admin/user${u.id}/promote">Promote</a>
 					</c:when>
-					<c:when test="${u.level == 'Admin'}">
+					<c:when test="${u.level == 2}">
+						<c:if test="${user.level == 3}">
 						<a href="/admin/user${u.id}/demote">Demote</a>
+						</c:if>
+						<c:if test="${user.level == 2}">
+							Admin
+						</c:if>
 					</c:when>
 				</c:choose>
 				</td>
 				<td>
 				<c:choose>
-					<c:when test="${u.level == 'User'}">
+					<c:when test="${u.level == 1}">
 						<a href="/admin/user${u.id}/delete">Delete</a>
 					</c:when>
-					<c:when test="${u.level == 'Admin'}">
-						<c:if test="${user.level == 'Super'}">
+					<c:when test="${u.level == 2}">
+						<c:if test="${user.level == 3}">
 						<a href="/admin/user${u.id}/delete">Delete</a>
 						</c:if>
 					</c:when>
@@ -74,6 +72,23 @@
 	</table>
 	
 </div>
+
+
+<div class="col-sm-2" style="margin: 3% 0">
+
+	<form method="POST" action="/logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<input type="submit" value="Logout" />
+	</form><br>
+	
+	<c:if test="${user.level == 2}">
+	<form method=GET action=/dashboard>
+		<input type="submit" value="Dashboard" />
+	</form>
+	</c:if>
+
+</div>
+
 	
 </div>
 </div>

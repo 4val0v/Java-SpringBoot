@@ -17,14 +17,7 @@
 <div class=container>
 <div class=row>
 
-<div class="col-sm-6">
-	
-	<div class=text-right><p>&nbsp;</p>
-	<form id="logoutForm" method="POST" action="/logout">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="submit" value="Logout" />
-	</form>
-	</div>
+<div class="col-sm-6" style="margin: 3% 0">
 	
 	<h2>Welcome, ${user.username}!</h2>
 	<p>First Name: ${user.first}</p>
@@ -34,6 +27,22 @@
 	<p>Last sign in: <fmt:formatDate type="both" dateStyle="short" timeStyle="short" value="${user.lastLogin}"/></p>
 
 </div>
+
+<div class="col-sm-2" style="margin: 3% 0">
+
+	<form method="POST" action="/logout">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+		<input type="submit" value="Logout" />
+	</form><br>
+	
+	<c:if test="${user.level == 2}">
+	<form method=GET action=/admin>
+		<input type="submit" value="Settings" />
+	</form>
+	</c:if>
+
+</div>
+
 	
 </div>
 </div>

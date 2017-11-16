@@ -21,48 +21,21 @@
 <div class=container>
 <div class=row>
 
+<c:choose>
+<c:when test="${p.host == user}">
+
     <div class="col-sm-8" style="margin: 2% 0">
 
-        <h3>Current Listings</h3>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <td><strong>Location</strong></td>
-                    <td><strong>Pool Size</strong></td>
-                    <td><strong>Cost</strong></td>
-                    <td><strong>Details</strong></td>
-                </tr>
-            </thead>
-            <tbody>
-                <fmt:setLocale value="en_US"/>
-                <c:forEach items="${user.pools}" var="p">
-                <tr>
-                    <td>${p.location}</td>
-                    <td>${p.size}</td>
-                    <td>
-                        <fmt:formatNumber value="${p.cost}" type="currency"/>
-                    </td>
-                    <td>
-                        <a href="/host/pools/${p.id}">${p.avgRating} - See more</a>
-                    </td>
-                </tr>
-                </c:forEach>
-            </tbody>
-        </table>
-
-	<div class="col-sm-6">
-	       <fieldset>
-            <legend>New Listing</legend>
-
-            <form:form method="POST" action="/host/dashboard/new" modelAttribute="pool">
+            <h4>Update Pool Info</h4>    
+            <form:form method="POST" action="/host/pools/${p.id}/edit" modelAttribute="pool">
 
                 <div class=form-group>
                     Location<br>
-                    <form:input path="location" cssClass="form-control input-sm"/>
+                    <form:input path="location" cssClass="form-control input-sm" placeholder="${p.location}"/>
                 </div>
                 <div class=form-group>
                     Description<br>
-                    <form:input path="description" cssClass="form-control input-sm"/>
+                    <form:input path="description" cssClass="form-control input-sm" placeholder="${p.description}"/>
                 </div>
                 <div class=form-group>
                     Cost ($)<br>
@@ -74,33 +47,69 @@
                         <form:option value="medium" label="medium"/>
                         <form:option value="large" label="large"/>
                     </form:select>
-                    <form:hidden path="host" value="${user.id}"/>
                 </div>
-                <p><input type="submit" value="Add Listing" class="btn btn-primary btn-sm"/></p>
+                <p><input type="submit" value="Update" class="btn btn-primary btn-sm"/></p>
 
             </form:form>
 
-        </fieldset>
-	</div>
-	
-	<div class="col-sm-4">
-        <p>
-        <p><form:errors path="location"/></p>
-        <p><form:errors path="description"/></p>
-        <p><form:errors path="cost"/></p>
-        <p><form:errors path="size"/></p>
-        
     </div>
 
+</c:when>
+<c:otherwise>
+
+    <div class="col-sm-8" style="margin: 2% 0">
+        <div class="col-sm-6">
+        <h4>${p.location}</h4>
+        <p>${p.description}</p>
+        </div>
+        <div class="col-sm-6">
+        <strong>Email</strong>: ${p.host.email}<br>
+        <strong>Name</strong>: ${p.host.first} ${p.host.last}<br>
+        <strong>Pool Size</strong>: ${p.size}<br>
+        <fmt:setLocale value="en_US"/>
+        <strong>Cost</strong>: <fmt:formatNumber value="${p.cost}" type="currency"/>
+        </div>
     </div>
+
+</c:otherwise>
+</c:choose>
 
     <div class="col-sm-4" style="margin: 2% 0">
-	<form method="POST" action="/logout">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-		<input type="submit" value="Logout" />
-	</form>
+        <h4><a href="/">Home</a></h4>
+            <c:if test="${user != null}">
+				<div>
+					<form method="POST" action="/logout">
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+						<input type="submit" value="Logout" />
+					</form>
+				</div>
+            </c:if>
+        </h4>
     </div>
+    
+</div>
 
+<div class=row>
+    <div class=col-sm-8>
+        <strong>Reviews (${p.avgRating}/5)</strong>
+        <c:if test="${user != null}">
+         | <a href="/pools/${p.id}/review">Leave a Review</a>
+        </c:if>
+    </div>
+</div>
+
+<div class=row>
+    <div class=col-sm-8>
+        <c:forEach items="${reviews}" var="r">
+            <hr>
+            <p>${r.author.first} ${r.author.last}
+            <br>Rating: ${r.rating}</p>
+            <p>${r.details}</p>
+        </c:forEach>
+    </div>
+</div>
+    
+</div>
 </div>
 </div>
 </body>

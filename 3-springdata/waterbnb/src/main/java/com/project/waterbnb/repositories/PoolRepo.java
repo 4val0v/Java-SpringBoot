@@ -2,32 +2,31 @@ package com.project.waterbnb.repositories;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.project.waterbnb.models.Pool;
+import com.project.waterbnb.models.User;
+
 @Repository 												
-public interface PoolRepo extends CrudRepository<Template, Long>{
+public interface PoolRepo extends CrudRepository<Pool, Long>{
 	
 	// Basic retrieval or check
-	List<Template> findAll();
-	List<Template> findAllBy_Var_(Type var);
-	List<Template> findAllBy_Var_NotIn(Type var);
-	Template findById(id);
-	Template findBy_Var_(Type var);
-	boolean existsById(Long id);
-	boolean existsBy_Var_(Type var);
+	List<Pool> findAll();
+	// List<Pool> findAllBy_Var_(Type var);
+	// List<Pool> findAllBy_Var_NotIn(Type var);
+	Pool findById(Long id);
+	// Pool findBy_Var_(Type var);
+	// boolean existsById(Long id);
+	// boolean existsBy_Var_(Type var);
 
 	// Custom retrieval
-	Template findFirstByOrderBy_Var_Asc();
-	List<Template> findFirst10ByOrderBy_Var_Asc();
-	List<Template> findBy_Var_Containing(String var);
+	// Pool findFirstByOrderBy_Var_Asc();
+	// List<Pool> findFirst10ByOrderBy_Var_Asc();
+	List<Pool> findByLocationContaining(String location);
 
 	// Retrieval by relationship
-	Template findBy_One_(One one); // 1t1
-	List<Template> findBy_One_(One one); // mt1
-
-	// If a join repo, use for both sides
-	List<Join> findBy_One_(One one); // mtm
+//	 Pool findBy_One_(One one); // 1t1
+	 List<Pool> findByHost(User host); // mt1
 	
 }

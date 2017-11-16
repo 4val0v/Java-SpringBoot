@@ -1,11 +1,14 @@
-package com.project.auth.models;
+package com.project.waterbnb.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
@@ -19,14 +22,21 @@ public class User {
 
 	@Id @GeneratedValue	private Long id;
 	@Column(unique=true)
-	@Size(min=5)			private String username;
-	@Size(min=5)			private String password;
+	@Email
+	@Size(min=3)			private String username;
+	@Size(min=3)			private String password;
 	@Transient			private String passwordConfirmation;
 	@Email				private String email;
 	@Size(min=3)			private String first;
 	@Size(min=3)			private String last;
 	private Date lastLogin;
 	private int level;
+	
+	@OneToMany(mappedBy="host", fetch=FetchType.LAZY)
+	private List<Pool> pools;
+	
+	@OneToMany(mappedBy="author", fetch=FetchType.LAZY)
+	private List<Review> review;
 	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern="MM-dd-yyyy HH:mm:ss") private Date createdAt;
@@ -95,6 +105,18 @@ public class User {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public List<Pool> getPools() {
+		return pools;
+	}
+	public List<Review> getReview() {
+		return review;
+	}
+	public void setPools(List<Pool> pools) {
+		this.pools = pools;
+	}
+	public void setReview(List<Review> review) {
+		this.review = review;
 	}
 	
 }
