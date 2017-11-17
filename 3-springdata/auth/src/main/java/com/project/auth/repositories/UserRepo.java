@@ -13,6 +13,8 @@ public interface UserRepo extends CrudRepository<User, Long>{
 	User findByUsername(String username);
 	User findByEmail(String email);
 	User findById(Long id);
+	boolean existsByEmail(String email);
+	boolean existsByUsername(String username);
 	List<User> findByLevel(int level);
 	List<User> findByLevelNotIn(int level);
 	User findFirstByOrderByIdAsc();

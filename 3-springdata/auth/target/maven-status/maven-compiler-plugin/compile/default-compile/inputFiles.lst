@@ -1,0 +1,8 @@
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/models/User.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/services/UserAuthService.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/repositories/UserRepo.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/controllers/Users.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/services/UserService.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/config/WebSecurityConfig.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/authApplication.java
+/Users/bcm/Desktop/Dojo/4-Java/3-springdata/auth/src/main/java/com/project/auth/validators/UserValidator.java

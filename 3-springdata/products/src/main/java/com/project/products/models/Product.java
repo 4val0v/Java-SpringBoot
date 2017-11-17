@@ -18,23 +18,30 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 public class Product {
 
 	@Id
 	@GeneratedValue
+	@JsonProperty("id")
 	private Long id;
 	
 	@NotNull(message="Please enter a product.")
+	@JsonProperty("name")
 	private String name;
 
 	@NotNull(message="Please add a description.")
+	@JsonProperty("description")
 	private String description;
 
 	@NumberFormat(style=Style.CURRENCY)
+	@JsonProperty("price")
 	private float price;
 	
 	@Column(updatable=false)
+	@JsonProperty("posted")
 	private Date createdAt;
 	private Date updatedAt;
 	

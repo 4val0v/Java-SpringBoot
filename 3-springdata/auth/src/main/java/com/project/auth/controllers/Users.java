@@ -2,17 +2,26 @@ package com.project.auth.controllers;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project.auth.models.User;
 import com.project.auth.services.UserService;
@@ -23,9 +32,11 @@ public class Users {
 	
 	private UserService us;
 	private UserValidator uv;
-	public Users (UserService us, UserValidator uv) {
+	private AuthenticationManager am;
+	public Users (UserService us, UserValidator uv, AuthenticationManager am) {
 		this.us = us;
 		this.uv = uv;
+		this.am = am;
 	}
 	
 	@RequestMapping("/")
@@ -47,7 +58,9 @@ public class Users {
 		uv.validate(u, r);
 		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
 		if (us.getByLevel(3).isEmpty()) { us.createSuper(u); }
-		else { us.createUser(u); } f.addFlashAttribute("thanks", "Thanks for signing up!");
+			else { us.createUser(u); }
+		f.addFlashAttribute("thanks", "Thanks for signing up!");
+
 		return "redirect:/";
 	}
 	
@@ -56,7 +69,8 @@ public class Users {
 		User user = us.getByUsername(p.getName());
 		us.updateLastLogin(user);
 		if (user.getLevel() == 3) { return "redirect:/admin"; }
-		else { m.addAttribute("user", user); return "dash"; }
+			else { m.addAttribute("user", user);
+		return "dash"; }
 	}
 	
 	@RequestMapping("/admin")
