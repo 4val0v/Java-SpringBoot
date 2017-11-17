@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
@@ -29,73 +30,87 @@ import com.project.auth.validators.UserValidator;
 
 @Controller
 public class Users {
-	
+
 	private UserService us;
 	private UserValidator uv;
 	private AuthenticationManager am;
-	public Users (UserService us, UserValidator uv, AuthenticationManager am) {
+	private BCryptPasswordEncoder bc;
+	public Users (UserService us, UserValidator uv, AuthenticationManager am, BCryptPasswordEncoder bc) {
 		this.us = us;
 		this.uv = uv;
 		this.am = am;
+		this.bc = bc;
 	}
-	
+
 	@RequestMapping("/")
 	public String landing(Model m,
-		@Valid @ModelAttribute("user") User u, Principal p,
-		@RequestParam(value="error", required=false) String e,
-		@RequestParam(value="logout", required=false) String l) {
-		
+						  @Valid @ModelAttribute("user") User u, Principal p,
+						  @RequestParam(value="error", required=false) String e,
+						  @RequestParam(value="logout", required=false) String l) {
+
 		if (p != null) { return "redirect:/dashboard"; }
 		if (e != null) { m.addAttribute("error", "Invalid credentials."); }
 		if (l != null) { m.addAttribute("logout", "Thanks for visiting!"); }
 		return "landing";
 	}
-	
+
 	@PostMapping("/register")
 	public String register(@Valid @ModelAttribute("user") User u,
-		BindingResult r, Model m, RedirectAttributes f) {
-		
+						   BindingResult r, Model m, RedirectAttributes f, HttpServletRequest req) {
+
 		uv.validate(u, r);
+		String pw = u.getPassword(); // store raw pw
 		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
 		if (us.getByLevel(3).isEmpty()) { us.createSuper(u); }
-			else { us.createUser(u); }
-		f.addFlashAttribute("thanks", "Thanks for signing up!");
+		else { us.createUser(u); }
+//			f.addFlashAttribute("thanks", "Thanks for signing up!");
 
-		return "redirect:/";
+		// Auto-login implementation
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(u.getUsername(), pw);
+		req.getSession();
+		token.setDetails(new WebAuthenticationDetails(req));
+		Authentication au = am.authenticate(token);
+		SecurityContextHolder.getContext().setAuthentication(au);
+		req.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+				SecurityContextHolder.getContext());
+		req.getSession().setAttribute("username", u.getUsername());
+		req.getSession().setAttribute("authorities", token.getAuthorities());
+
+		return "redirect:/dashboard";
 	}
-	
+
 	@RequestMapping("/dashboard")
 	public String dash(Principal p, Model m) {
 		User user = us.getByUsername(p.getName());
 		us.updateLastLogin(user);
 		if (user.getLevel() == 3) { return "redirect:/admin"; }
-			else { m.addAttribute("user", user);
-		return "dash"; }
+		else { m.addAttribute("user", user);
+			return "dash"; }
 	}
-	
+
 	@RequestMapping("/admin")
 	public String admin(Principal p, Model m) {
 		m.addAttribute("user", us.getByUsername(p.getName()));
 		m.addAttribute("users", us.getAll());
 		return "admin";
 	}
-	
+
 	@RequestMapping("/admin/user{u}/promote")
 	public String promote(@PathVariable("u") Long u) {
 		us.promote(us.get(u));
 		return "redirect:/admin";
 	}
-	
+
 	@RequestMapping("/admin/user{u}/demote")
 	public String demote(@PathVariable("u") Long u) {
 		us.demote(us.get(u));
 		return "redirect:/admin";
 	}
-	
+
 	@RequestMapping("/admin/user{u}/delete")
 	public String delete(@PathVariable("u") Long u) {
 		us.delete(us.get(u));
 		return "redirect:/admin";
 	}
-	
+
 }
