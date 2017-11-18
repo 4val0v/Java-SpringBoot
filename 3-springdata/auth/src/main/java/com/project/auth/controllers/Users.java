@@ -59,11 +59,10 @@ public class Users {
 						   BindingResult r, Model m, RedirectAttributes f, HttpServletRequest req) {
 
 		uv.validate(u, r);
-		String pw = u.getPassword(); // store raw pw
+		String pw = u.getPassword(); // store prior to bcrypt
 		if (r.hasErrors()) { m.addAttribute("errors", "!"); return "landing"; }
 		if (us.getByLevel(3).isEmpty()) { us.createSuper(u); }
 		else { us.createUser(u); }
-//			f.addFlashAttribute("thanks", "Thanks for signing up!");
 
 		// Auto-login implementation
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(u.getUsername(), pw);
